@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\GameUser;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class GameUserController extends Controller
+{
+
+    public function createUser(Request $request){
+            info($request->nickname);
+            info($request->user_id);
+
+            GameUser::create([
+                'nickname' => $request->nickname,
+                'user_id' => $request->user_id
+        ]);
+
+        return response()->json(['success'=>"200"]);
+
+    }
+
+}
