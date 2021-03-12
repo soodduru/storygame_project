@@ -65,6 +65,7 @@
             } ,
             success: function (response) {
 
+                // gameStart.blade.php로 넘어가야함 
             },
             error: function() {
                 console.log("에러");

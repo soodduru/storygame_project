@@ -44,3 +44,5 @@ Route::get('/gameStart/{id}',"GameController@getGameStart");
 
 
 Route::post('/storyStart',"StoryController@storyStart");
+
+Route::post('/storyUpdate',"StoryStatusUpdateController@statusUpdate");
