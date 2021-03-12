@@ -81,6 +81,9 @@
                         success: function (response) {
                             ``//화면 바꾸기
                             time_out = date_now+30;
+                            if(response.success=="200"){
+                                // 성공했을 시 화면 변경 
+                            }
                         },
                         error: function() {
                             console.log("에러");
