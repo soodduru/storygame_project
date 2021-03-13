@@ -40,7 +40,7 @@ Route::post('/participate', "GameController@participateRoom");
 Route::post('/gameStart',"GameController@gameStart");
 
 //
-Route::get('/gameStart/{id}',"GameController@getGameStart");
+Route::get('/gameStart/{game_id}',"GameController@getGameStart");
 
 
 Route::post('/storyStart',"StoryController@storyStart");

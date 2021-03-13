@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class StoryController extends Controller
+class StoryStatusUpdateController extends Controller
 {
 
     // status를 typing과 finish로 바꿔주는 function
@@ -27,7 +27,7 @@ class StoryController extends Controller
         $my_status = $my_status_row->story_status;
 
         // 마지막 user 구하기
-        $lastuser = ReadyRoom::where('room_id',$request->room_id)->orderBy('id', 'desc')->first();
+        $lastuser = ReadyRoom::where('room_id',$request->room_id)->orderBy('id', 'desc')>-first();
 
         // 1) my_status만 가져와서 수정
         if($my_status=="typing"){

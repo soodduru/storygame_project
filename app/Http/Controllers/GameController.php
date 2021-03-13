@@ -106,24 +106,27 @@ class GameController extends Controller
     public function gameStart(Request $request){
 
         $game_id = Str::random(40);
-        
+
         Room::where('id',$request->room_id)->update([
             'room_status'=>1,
             'game_id'=>$game_id,
             ]);
 
 
-
         ReadyRoom::where('room_id',$request->room_id)->update([
             'game_id'=>$game_id,
         ]);
 
+        // 생성한 random game_id를 다시 보내주기
+        return response()->json(['success'=>"200",'game_id'=>$game_id]);
+
     }
 
 
-    public function getGameStart($id){
+    public function getGameStart($game_id){
 
-        return view('gameStart',["room_id"=>$id]);
+        $room_info = ReadyRoom::where('game_id',$game_id)->get()->last();
+        return view('gameStart',["game_id"=>$game_id, "room_id"=>$room_info->room_id]);
 
     }
 

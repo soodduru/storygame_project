@@ -14,18 +14,14 @@ class StoryController extends Controller
 
     public function storyStart(Request $request){
         // 방 인원 전체
-        $all_participant_status_rows = ReadyRoom::where('room_id',$request->room_id)->get();
+        $all_participant_status_rows = ReadyRoom::where('game_id',$request->game_id)->get();
 
         // 현재 story가 null
-        $story_null = ReadyRoom::whereNull('story_status')->get()->first();
+        $story_null = ReadyRoom::where('game_id',$request->game_id)->whereNull('story_status')->get()->first();
         //현재 STORY가 EXISTS!
-        $story_exists = ReadyRoom::whereNotNull('story_status')->get()->last();
+        $story_exists = ReadyRoom::where('game_id',$request->game_id)->whereNotNull('story_status')->get()->last();
         // 해당 방의 본인
-        $my_status_row = ReadyRoom::where('room_id',$request->room_id)->where('user',$request->user)->get()->last();
-
-        // room_id로 특정해줘야 하는 것 아닌가?
-        // $story_null = ReadyRoom::where('room_id',$request->room_id)->whereNull('story_status')->get()->first();
-        // $story_exists = ReadyRoom::where('room_id',$request->room_id)->whereNotNull('story_status')->get()->last();
+        $my_status_row = ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->get()->last();
 
 
         foreach ($all_participant_status_rows as $all_participant_status_row){
@@ -73,7 +69,7 @@ class StoryController extends Controller
                         $rumor = "조수연 바보";// #rumor_template에서 rumor 불러 올 수 있는 코드 추가필요
 
                         // 1타자의 strory_satus를 listening으로 update
-                        ReadyRoom::where('room_id',$request->room_id)->where('user',$request->user)->update([
+                        ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->update([
                             'story_status'=>'listening'
                         ]);
 

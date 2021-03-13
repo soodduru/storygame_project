@@ -9,6 +9,7 @@
 <div id="game">
     <div id="storyBoard" style="width: 500px; height: 500px;">
         {{$room_id}}
+        {{$game_id}}
     </div>
 </div>
 
@@ -17,6 +18,7 @@
 
     const user = localStorage.getItem('user_id');
     const room_id = {{$room_id}};
+    const game_id = {{$game_id}};
 
 
     $.ajax({
@@ -25,7 +27,8 @@
         data: {
             user: user,
             room_id: room_id,
-        } ,
+            game_id: game_id,
+        },
         success: function (response) {
         //화면 바꾸기
             var user_status = response.user_status;
@@ -54,7 +57,7 @@
     });
 
     var date_now = new Date();
-    var time_out = date_now+30;//new Date(+ 30초);
+    var time_out = date_now+5;//new Date(+ 30초);
 
     var interval = setInterval(function(){
         //1초마다 흘러감
@@ -69,6 +72,7 @@
                     user: user,
                     room_id: room_id,
                     story : story,
+                    game_id: game_id,
                 } ,
                 success: function (response) {
 ``                  $.ajax({
@@ -82,7 +86,7 @@
                             ``//화면 바꾸기
                             time_out = date_now+30;
                             if(response.success=="200"){
-                                // 성공했을 시 화면 변경 
+                                // 성공했을 시 화면 변경
                             }
                         },
                         error: function() {

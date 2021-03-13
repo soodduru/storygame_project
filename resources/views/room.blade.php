@@ -24,6 +24,7 @@
     var users = new Array();
 
 
+
     var room_socket = setInterval(function(){
 
         $.ajax({
@@ -65,7 +66,13 @@
             } ,
             success: function (response) {
 
-                // gameStart.blade.php로 넘어가야함 
+                if(response.success=="200"){
+                    // 성공 시 gameStart.blade.php로 이동
+                    // game_id만 들고가기
+                    location.href="/gameStart/"+response.game_id;
+
+                }
+
             },
             error: function() {
                 console.log("에러");
