@@ -8,9 +8,17 @@
 <body>
 <div id="game">
     <div id="storyBoard" style="width: 500px; height: 500px;">
-        {{$room_id}}
+        방번호 : {{$room_id}}
         {{$game_id}}
+
     </div>
+</div>
+
+// test용
+<div>
+    <button onclick="test()";>다음단계로 이동</button>
+</div>
+<div id="basicBoard">
 </div>
 
 
@@ -18,8 +26,10 @@
 
     const user = localStorage.getItem('user_id');
     const room_id = {{$room_id}};
-    const game_id = {{$game_id}};
+    const game_id = "{{$game_id}}";
 
+    // 최초의
+    var status="";
 
     $.ajax({
         url: "/storyStart",
@@ -30,77 +40,183 @@
             game_id: game_id,
         },
         success: function (response) {
-        //화면 바꾸기
-            var user_status = response.user_status;
-            var rumor = response.rumor;
 
-            if(user_status=="LISTENING"){
-                // 본인이 듣고 있는 상태
-                // lisening 화면으로 room_id, user, rumor를 보내줘야 함
-                // 보내주는게 아니라 제이쿼리로 여기에 창을 띄우는 거 아닌ㄱ가???
-                // 그래야 밑에 interval이랑 ajax가 적용되는거 아닌가????
-            }else if(user_status=="LISTENING_WAITING"){
-                // 다른 사람이 듣고 있는 상태
+            console.log(response.success);
+            $('#basicBoard').text(response.success);
 
-            }else if(user_status=="TYPING"){
-                // 본인이 치고 있는 상태
-
-            }else if(user_status=="TYPING_WAITING"){
-                // 다른 사람이 듣고 있는 상태
-            }
-
-
+            status = response.user_status;
+            // 잠시 후 게임이 시작됩니다
         },
         error: function() {
             console.log("에러");
         }
     });
 
-    var date_now = new Date();
-    var time_out = date_now+5;//new Date(+ 30초);
+
+
+
+
+
+    function test(){
+
+        var story = "와리바리 test";
+
+        $.ajax({
+            url: "/storyUpdate",
+            type: "post",
+            data: {
+                user: user,
+                room_id: room_id,
+                status: status,
+                story : story,
+                game_id: game_id,
+            } ,
+            success: function (response) {
+                $.ajax({
+                    url: "/storyStart",
+                    type: "post",
+                    data: {
+                        user: user,
+                        room_id: room_id,
+                        game_id: game_id,
+                    } ,
+                    success: function (response) {
+                        //화면 바꾸기
+
+                        var original_status = status;
+                        console.log(response.user_status);
+                        status = response.user_status;
+                        $('#basicBoard').text(response.user_status);
+
+                        if(response.success=="200"){
+                            // 성공했을 시 화면 변경
+                            //화면 바꾸기
+                            var user_status = response.user_status;
+                            var rumor = response.rumor;
+                            var active_user = response.activ_user;
+
+                            if(user_status=="listening"){
+
+                                $('#basicBoard').html('<div style="width: 200px; height: 300px;">\n' + rumor + '</div>');
+
+
+                            }else if(user_status=="listening_waiting"){
+                                // 다른 사람이 듣고 있는 상태
+                                $('#basicBoard').html('<div style="width: 200px; height: 300px;">\n' + rumor + '</div>');
+
+                            }else if(user_status=="typing"){
+                                // 본인이 치고 있는 상태
+
+                            }else if(user_status=="typing_waiting"){
+                                // 다른 사람이 듣고 있는 상태
+                            }
+                        }
+                           /* if(original_status==status){
+                                time_out = date_now-1;
+                            } else {
+                                time_out = date_now+30;
+                            }*/
+                        //
+                    },
+                    error: function() {
+                        console.log("에러");
+                    }
+                });
+
+            },
+            error: function() {
+                console.log("에러");
+            }
+        });
+
+    }
+
+
+    var date_now = Date.now();
+    var time_out = date_now+5000;//new Date(+ 30초);
+
 
     var interval = setInterval(function(){
         //1초마다 흘러감
-        var date_now = new Date();
 
-        var story = "nljlasdf";
+
+        var date_now = Date.now();
+        console.log("now : " + date_now + "time out : " + time_out);
+
         if(date_now > time_out){
-            $.ajax({
-                url: "/storyUpdate",
-                type: "post",
-                data: {
-                    user: user,
-                    room_id: room_id,
-                    story : story,
-                    game_id: game_id,
-                } ,
-                success: function (response) {
-``                  $.ajax({
-                        url: "/storyStart",
-                        type: "post",
-                        data: {
-                            user: user,
-                            room_id: room_id,
-                        } ,
-                        success: function (response) {
-                            ``//화면 바꾸기
-                            time_out = date_now+30;
-                            if(response.success=="200"){
-                                // 성공했을 시 화면 변경
-                            }
-                        },
-                        error: function() {
-                            console.log("에러");
-                        }
-                    });
+        var story = "와리바리 test";
 
-                },
-                error: function() {
-                    console.log("에러");
-                }
-            });
-        }
-    },100)
+        $.ajax({
+            url: "/storyUpdate",
+            type: "post",
+            data: {
+                user: user,
+                room_id: room_id,
+                status: status,
+                story : story,
+                game_id: game_id,
+            } ,
+            success: function (response) {
+                $.ajax({
+                    url: "/storyStart",
+                    type: "post",
+                    data: {
+                        user: user,
+                        room_id: room_id,
+                        game_id: game_id,
+                    } ,
+                    success: function (response) {
+                        //화면 바꾸기
+
+                        var original_status = status;
+                        console.log(response.user_status);
+                        status = response.user_status;
+                        $('#basicBoard').text(response.user_status);
+
+                        if(response.success=="200"){
+                            // 성공했을 시 화면 변경
+                            //화면 바꾸기
+                            var user_status = response.user_status;
+                            var rumor = response.rumor;
+                            var active_user = response.activ_user;
+
+                            if(user_status=="listening"){
+
+                                $('#basicBoard').html('<div style="width: 200px; height: 300px;">\n' + rumor + '</div>');
+
+
+                            }else if(user_status=="listening_waiting"){
+                                // 다른 사람이 듣고 있는 상태
+                                $('#basicBoard').html('<div style="width: 200px; height: 300px;">\n' + rumor + '</div>');
+
+                            }else if(user_status=="typing"){
+                                // 본인이 치고 있는 상태
+
+                            }else if(user_status=="typing_waiting"){
+                                // 다른 사람이 듣고 있는 상태
+                            }
+                        }
+
+                        // web의 status와 db의 status 일치 여부에 따라
+                            if(original_status==status){
+                                time_out = date_now-1;
+                            } else {
+                                time_out = date_now+5000;
+                            }
+
+                    },
+                    error: function() {
+                        console.log("에러");
+                    }
+                });
+
+            },
+            error: function() {
+                console.log("에러");
+            }
+        });
+            }
+    },1000)
 
 </script>
 </body>

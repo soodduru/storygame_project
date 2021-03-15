@@ -15,12 +15,10 @@ class GameController extends Controller
     public function roomList(){
         $selected_list_rows = Room::all();
         return view('list', ['room_rows'=>$selected_list_rows]);
-
     }
 
     // 방생성
     public function createRoom(Request $request){
-
         // info($request->nickname);
         $create_room=Room::create([
             'master_nickname'=> $request->nickname,
@@ -29,26 +27,23 @@ class GameController extends Controller
             'room_name' => $request->room_name,
         ]);
 
-        // 방장 정보를 ready_room table에도 넣어주기
+        // 방장 정보를 ready_room table에 넣어주기
         ReadyRoom::create([
             'room_id' => $create_room->id,
             'user'=> $create_room->user1,
         ]);
-        info($create_room->id);
+        // info($create_room->id);
 
-        // return false;
-        // $this->enterRoom();
-
+        // 바로 생성한 방으로 입장
         return redirect('/room/'.$create_room->id);
-       // return view('room', ['room_data'=>$create_room]);
     }
 
     // 게임참여 시 1)인원수 확인 2) user_id를 ready_room table에 넣어주기
     public function participateRoom(Request $request){
 
         // info($request->room_id);
-
         $number_of_members = ReadyRoom::where('room_id',$request->room_id)->get()->count();
+
         // info($number_of_members);
         if($number_of_members>=8){
             // 경고
@@ -83,7 +78,6 @@ class GameController extends Controller
         return view('room', ['room_data'=>$room_data]);
 
 
-
     }
 
     // room id를 가지고 방에 있는 실시간 인원조회
@@ -92,11 +86,31 @@ class GameController extends Controller
         $selected_list_row = ReadyRoom::where('room_id',$request->room_id)->get();
         // 게임 상태 체크 gameStatus
 
+        // nickname 출력을 위한 join 절
+        // room_id가 $request->room_id인 ready_room의 user == game_user의 user_id 의 닉네임
+        // room_id 가
+
+        $room_id= $request->room_id;
+
+
+/*        $users = DB::table('game_user')
+            ->join('ready_room', function($join) {
+            $join->on('game_user.user_id','=','ready_room.user')
+                ->where('ready_room.room_id','=',$room_id);
+        })->get();*/
+
+        $users = DB::table('game_user')
+            ->join('ready_room', 'ready_room.user', '=', 'game_user.user_id')
+            ->where('ready_room.room_id','=',$room_id)
+            ->get();
+
+
+
         $game_status= Room::where('id',$request->room_id)->get()->first();
         if($game_status->room_status==1){
-            return response()->json(['data'=>$selected_list_row, 'success'=>"200",'gameStatus'=>1]);
+            return response()->json(['data'=>$selected_list_row, 'success'=>"200",'gameStatus'=>1,'game_id'=>$game_status->game_id, 'users'=>$users]);
         } else {
-            return response()->json(['data'=>$selected_list_row, 'success'=>"200",'gameStatus'=>0]);
+            return response()->json(['data'=>$selected_list_row, 'success'=>"200",'gameStatus'=>0,'users'=>$users]);
         }
 
 
@@ -105,6 +119,7 @@ class GameController extends Controller
     // 게임 시작 버튼 클릭
     public function gameStart(Request $request){
 
+        // game_id 생성
         $game_id = Str::random(40);
 
         Room::where('id',$request->room_id)->update([
@@ -126,7 +141,9 @@ class GameController extends Controller
     public function getGameStart($game_id){
 
         $room_info = ReadyRoom::where('game_id',$game_id)->get()->last();
+
         return view('gameStart',["game_id"=>$game_id, "room_id"=>$room_info->room_id]);
+
 
     }
 

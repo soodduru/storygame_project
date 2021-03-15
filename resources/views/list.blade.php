@@ -5,18 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-
+    {{--부트스트랩--}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-room_rows
-<table>
+
+<table class="table table-dark table-hover">
     <thead>
     <tr>
         <td>idx</td>
         <td>방이름</td>
         <td>방장</td>
-        <td>master_user_id</td>
+        <td>방 입장하기</td>
 
     </tr>
     </thead>
@@ -32,10 +36,13 @@ room_rows
     </tbody>
 </table>
 
+<div class="container-md p-3 my-3 bg-dark text-white">
+    <h1>방 직접 만들기</h1>
+    <input type="text" name="room_name" id="room_name" placeholder="방이름을 입력해주세요"/><br>
+    <button onclick="room_make()">방만들기</button>
+</div>
 
-<label for="room_name">방이름</label>
-<input type="text" name="room_name" id="room_name"/><br>
-<button onclick="room_make()">방만들기</button>
+
 
 <script>
 

@@ -6,22 +6,38 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
+    {{--부트스트랩--}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>{{$room_data -> id}} 방</h1>
-<h1></h1>
-<div id="memberList">
-    <div style="width: 200px; height: 300px;">
-      {{$room_data -> master_nickname}}
-    </div>
+
+<div class="container-md p-3 my-3 bg-dark text-white" id="memberList2">
+    <h1>{{$room_data -> id}} 방</h1>
+    <h1>방장 : {{$room_data -> master_nickname}}</h1>
 </div>
 
-<button onclick="story_start()">게임시작</button>
+
+<div id="startButton">
+
+</div>
+
 <script>
+    // 게임시작 버튼은 방장만 볼 수 있도록
+    master_id = "{{$room_data -> master_user_id}}";
+    // 해당 웹의 user_id
+    var my_user_id = localStorage.getItem("user_id");
+
+    if(master_id==my_user_id){
+        $('#startButton').html('<button onclick="story_start()">게임시작</button>');
+    }
 
     const room_id = {{$room_data -> id}};
     // 배열 선언
     var users = new Array();
+    var test_users = new Array();
 
 
 
@@ -35,16 +51,33 @@
             } ,
             success: function (response) {
                 if(response.gameStatus==1){
-                    location.href="/gameStart/"+room_id;
+                    location.href="/gameStart/"+response.game_id;
                 }
+
+
+
+                //
                 if(response.success=="200") {
-                        $.each(response.data, function(key, value){
+   /*                     $.each(response.data, function(key, value){
                             if(users.includes(value.user)==false){
                                 users.push(value.user);
                                 $('#memberList').append('<div style="width: 200px; height: 300px;">\n' + value.user +
                                     '    </div>');
                             }
-                        })
+                        })*/
+
+                    // 닉네임 출력해주기
+
+
+                    $.each(response.users, function(key, value){
+                        console.log(value.nickname);
+                        if(test_users.includes(value.nickname)==false){
+                            test_users.push(value.nickname);
+                            $('#memberList2').append('<div style="width: 200px; height: 300px;">\n' + value.nickname +
+                                '    </div>');
+                        }
+                    })
+
                 }
             },
             error: function() {

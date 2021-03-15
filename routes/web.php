@@ -46,3 +46,7 @@ Route::get('/gameStart/{game_id}',"GameController@getGameStart");
 Route::post('/storyStart',"StoryController@storyStart");
 
 Route::post('/storyUpdate',"StoryStatusUpdateController@statusUpdate");
+
+Route::get('/test', function () {
+    return view('test');
+});

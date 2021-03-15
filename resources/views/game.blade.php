@@ -4,12 +4,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    {{--부트스트랩--}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-<label for="nickname">닉네임</label>
-<input type="text" name="nickname" id="nickname"/><br>
-<button onclick="game_guide()">게임방법보기</button>
-<button onclick="game_start()">게임시작</button>
+
+
+
+<div class="container-md p-3 my-3 bg-dark text-white">
+    <h1>Story Game</h1>
+    <p>아무말이나 즐겨보세요~</p>
+    {{--<label for="nickname">닉네임</label>--}}
+    <input type="text" name="nickname"  class="form-control" id="nickname" placeholder="닉네임을 입력해주세요"/><br>
+    <button class="btn btn-success btn-sm" onclick="game_guide()">게임방법보기</button>
+    <button class="btn btn-success btn-sm" onclick="game_start()">게임시작</button>
+</div>
+
+
+
 <script>
     // 1. 게임설명
     function game_guide(){
@@ -34,7 +51,7 @@
     function game_start(){
 
         if(document.getElementById('nickname').value ==''){
-            // 닉네임 입력 안했을시 
+            // 닉네임 입력 안했을시
             alert("닉네임을 입력해주세요");
         }else{
             let user_id = generateId();
@@ -55,6 +72,9 @@
                     console.log(response);
                     if(response.success=="200"){
                         location.href="gameRoomList";
+                    } else if(response.success=="300"){
+                        // 중복 닉네임
+                        alert("이미 존재하는 닉네임입니다");
                     }
                 },
                 error: function() {
