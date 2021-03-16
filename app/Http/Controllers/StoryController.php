@@ -25,6 +25,7 @@ class StoryController extends Controller
 
 
         // git test
+        // git commit test
 
         foreach ($all_participant_status_rows as $all_participant_status_row){
             if($all_participant_status_row->user==$story_null->user){
