@@ -24,6 +24,7 @@ class StoryController extends Controller
         $my_status_row = ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->get()->last();
 
 
+        // git test
 
         foreach ($all_participant_status_rows as $all_participant_status_row){
             if($all_participant_status_row->user==$story_null->user){
