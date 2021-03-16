@@ -14,7 +14,7 @@
 <body>
 
 
-<table class="table table-dark table-hover">
+{{--<table class="table table-dark table-hover">
     <thead>
     <tr>
         <td>idx</td>
@@ -30,11 +30,33 @@
             <td>{{$room_row->id}}</td>
             <td>{{$room_row->room_name}}</td>
             <td>{{$room_row->master_nickname}}</td>
+            @if($room_row->room_status==0)
             <td><button onclick="participateRoom({{$room_row->id}})">방 들어가기</button></td>
+            @elseif($room_row->room_status==1)
+                <td><button disabled="disabled">게임 중</button></td>
+            @endif
         </tr>
     @endforeach
     </tbody>
-</table>
+</table>--}}
+
+
+
+<div >
+    <table class="table table-dark table-hover">
+        <thead>
+        <tr>
+            <td>idx test</td>
+            <td>방이름</td>
+            <td>방장</td>
+            <td>방 입장하기</td>
+
+        </tr>
+        </thead>
+        <tbody id="roomListTest">
+        </tbody>
+    </table>
+</div>
 
 <div class="container-md p-3 my-3 bg-dark text-white">
     <h1>방 직접 만들기</h1>
@@ -42,10 +64,47 @@
     <button onclick="room_make()">방만들기</button>
 </div>
 
-
-
 <script>
 
+
+    var lists = new Array();
+
+    var list_socket = setInterval(function(){
+        $.ajax({
+            url: "/roomListTest",
+            type: "post",
+            data: {
+            } ,
+            success: function (response) {
+
+                if(response.success=="200") {
+
+                    $.each(response.room_rows, function(key, value){
+
+                        if(lists.includes(value.id)==false){
+                            lists.push(value.id);
+                            $('#roomListTest').append('<tr>\n' +
+                                '            <td>' + value.id+ '</td>\n' +
+                                '            <td>' + value.room_name+'</td>\n' +
+                                '            <td>' + value.master_nickname+'</td>\n' +
+                                (value.room_status == 0 ?
+                                '            <td><button onclick="participateRoom(' + value.id + ')">방 들어가기</button></td>\n' :
+                                    '<td><button disabled="disabled">게임 중</button></td>\n' )+
+                                    '        </tr>');
+
+                        }
+                    })
+
+                }
+
+
+            },
+            error: function() {
+                console.log("에러");
+            }
+        });
+
+    }, 1000);
 
 
     function participateRoom(room_id){

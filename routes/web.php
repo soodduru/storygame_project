@@ -27,6 +27,7 @@ Route::post('/gameUserCreate', "GameUserController@createUser");
 // 위에 로직 성공 시 방목록으로 이동
 Route::get('/gameRoomList', "GameController@roomList");
 
+Route::post('/roomListTest', "GameController@roomListTest");
 // 방생성
 Route::get('/makeRoom', "GameController@createRoom");
 

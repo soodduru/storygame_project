@@ -17,6 +17,12 @@ class GameController extends Controller
         return view('list', ['room_rows'=>$selected_list_rows]);
     }
 
+    // 방목록을 실시간 확인 할 수 있도록
+    public function roomListTest(){
+        $selected_list_rows = Room::all();
+        return response()->json(['success'=>"200", 'room_rows'=>$selected_list_rows]);
+    }
+
     // 방생성
     public function createRoom(Request $request){
         // info($request->nickname);
@@ -119,21 +125,39 @@ class GameController extends Controller
     // 게임 시작 버튼 클릭
     public function gameStart(Request $request){
 
-        // game_id 생성
-        $game_id = Str::random(40);
 
-        Room::where('id',$request->room_id)->update([
-            'room_status'=>1,
-            'game_id'=>$game_id,
+        // 인원이 1명일때는 게임 진행 X
+
+        $user_count = ReadyRoom::where('room_id',$request->room_id)->count();
+
+
+
+        if($user_count<=1){
+            // 인원이 1명이나 1명이하 일 때
+
+            return response()->json(['success'=>"300"]);
+
+
+        } else {
+
+            // game_id 생성
+            $game_id = Str::random(40);
+
+            Room::where('id',$request->room_id)->update([
+                'room_status'=>1,
+                'game_id'=>$game_id,
             ]);
 
 
-        ReadyRoom::where('room_id',$request->room_id)->update([
-            'game_id'=>$game_id,
-        ]);
+            ReadyRoom::where('room_id',$request->room_id)->update([
+                'game_id'=>$game_id,
+            ]);
 
-        // 생성한 random game_id를 다시 보내주기
-        return response()->json(['success'=>"200",'game_id'=>$game_id]);
+            // 생성한 random game_id를 다시 보내주기
+            return response()->json(['success'=>"200",'game_id'=>$game_id]);
+        }
+
+
 
     }
 

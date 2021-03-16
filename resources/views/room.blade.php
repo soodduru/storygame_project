@@ -55,19 +55,7 @@
                 }
 
 
-
-                //
                 if(response.success=="200") {
-   /*                     $.each(response.data, function(key, value){
-                            if(users.includes(value.user)==false){
-                                users.push(value.user);
-                                $('#memberList').append('<div style="width: 200px; height: 300px;">\n' + value.user +
-                                    '    </div>');
-                            }
-                        })*/
-
-                    // 닉네임 출력해주기
-
 
                     $.each(response.users, function(key, value){
                         console.log(value.nickname);
@@ -79,6 +67,8 @@
                     })
 
                 }
+
+
             },
             error: function() {
                 console.log("에러");
@@ -89,7 +79,7 @@
 
 
     function story_start(){
-        console.log("etst");
+
         // ajax
         $.ajax({
             url: "/gameStart",
@@ -104,6 +94,9 @@
                     // game_id만 들고가기
                     location.href="/gameStart/"+response.game_id;
 
+                } else if (response.success=="300") {
+
+                    alert("2명 이상이어야 게임이 가능합니다");
                 }
 
             },
