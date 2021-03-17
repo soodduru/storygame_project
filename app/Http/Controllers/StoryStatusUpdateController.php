@@ -33,6 +33,7 @@ class StoryStatusUpdateController extends Controller
         $web_status = $request->status;
 
         info($my_status."   :    ".$web_status);
+        info($my_status."     : ".$request->story);
 
         /*if($my_status==$web_status){
 
@@ -94,19 +95,11 @@ class StoryStatusUpdateController extends Controller
                     return response()->json(['success'=>"300"]);
 
                 }else if($my_status=="listening"){
-
                     ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->update([
                         'story_status'=>'typing',
                     ]);
-
-
                 }
-
-
-
             }else{
-
-
                 // 1) my_status만 가져와서 수정
                 if($my_status=="typing"){
                     // finish로 교체 후 story update
@@ -135,26 +128,11 @@ class StoryStatusUpdateController extends Controller
                     // 게임 끝
 
                 }
-
-
-
             }
 
-
-        } else {
-
-            info("설마 니가 또 내 발목을 잡진 않겠지");
             return response()->json(['success'=>"200"]);
-
         }
-
-
-
-
-
-
-
-        }
+    }
 
 
 

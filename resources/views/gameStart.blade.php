@@ -14,6 +14,13 @@
     </div>
 </div>
 
+
+<div id="gameBoard">
+
+
+</div>
+
+
 // test용
 <div>
     <button onclick="test()";>다음단계로 이동</button>
@@ -30,6 +37,8 @@
 
     // 최초의
     var status="";
+
+
 
     $.ajax({
         url: "/storyStart",
@@ -65,11 +74,14 @@
 
 
         var date_now = Date.now();
-        console.log("now : " + date_now + "time out : " + time_out);
+       // console.log("now : " + date_now + "time out : " + time_out);
 
+        var story = $('#comment').val();
+        console.log("interval"story);
         if(date_now > time_out){
-        var story = "와리바리 test";
 
+            var story = $('#comment').val();
+            console.log(story);
         $.ajax({
             url: "/storyUpdate",
             type: "post",
@@ -97,6 +109,7 @@
                         status = response.user_status;
                         $('#basicBoard').text(response.user_status);
 
+
                         if(response.success=="200"){
                             // 성공했을 시 화면 변경
                             //화면 바꾸기
@@ -106,18 +119,30 @@
 
                             if(user_status=="listening"){
 
-                                $('#basicBoard').html('<div style="width: 200px; height: 300px;">\n' + rumor + '</div>');
+                                $('#basicBoard').html('<div id="rumorField" style="width: 200px; height: 300px;">\n' + rumor + '</div>');
 
 
                             }else if(user_status=="listening_waiting"){
                                 // 다른 사람이 듣고 있는 상태
-                                $('#basicBoard').html('<div style="width: 200px; height: 300px;">\n' + rumor + '</div>');
+                                $('#basicBoard').html('<div id="rumorField" style="width: 200px; height: 300px;">\n' + rumor + '</div>');
+                                $('.form-group').remove();
 
                             }else if(user_status=="typing"){
                                 // 본인이 치고 있는 상태
+                                $('#rumorField').remove();
+                                $('#gameBoard').html('<div class="form-group"> \n' +
+                                    '                                    <label for="comment">Comment:</label> \n' +
+                                    '                                <textarea class="form-control" rows="5" id="comment"></textarea>\n' +
+                                    '                                    </div>');
+
+                                //var textarea = document.getElementById('#comment');
+
+                                //console.log(textarea.value);
 
                             }else if(user_status=="typing_waiting"){
                                 // 다른 사람이 듣고 있는 상태
+                                $('#basicBoard').html('<div id="rumorField" style="width: 200px; height: 300px;">\n' + rumor + '</div>');
+
                             }
                         } else if(response.success=="300") {
 
