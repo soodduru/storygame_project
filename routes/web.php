@@ -51,3 +51,6 @@ Route::post('/storyUpdate',"StoryStatusUpdateController@statusUpdate");
 Route::get('/test', function () {
     return view('test');
 });
+
+Route::get('/storyFinish/{game_id}',"StoryController@storyFinish");
+

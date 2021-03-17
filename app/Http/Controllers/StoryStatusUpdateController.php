@@ -34,14 +34,11 @@ class StoryStatusUpdateController extends Controller
 
         info($my_status."   :    ".$web_status);
 
-        if($my_status==$web_status){
+        /*if($my_status==$web_status){
 
-            info("대소문자 구별 가넝");
             // 1) my_status만 가져와서 수정
             if($my_status=="typing"){
                 // finish로 교체 후 story update
-
-
                 ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->update([
                     'story_status'=>'finish',
                     'story'=>$request->story,
@@ -73,7 +70,88 @@ class StoryStatusUpdateController extends Controller
 
             return response()->json(['success'=>"200"]);
 
+        }*/
+
+
+
+
+
+        if($my_status==$web_status){
+
+            if($request->user == $lastuser->user){
+                // 내가 마지막 유저이면
+
+                info("내가 마지막유저입니다");
+                // 1) my_status만 가져와서 수정
+                if($my_status=="typing"){
+                    // finish로 교체 후 story update
+                    ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->update([
+                        'story_status'=>'finish',
+                        'story'=>$request->story,
+                    ]);
+
+                    // 왜 얘는 return을 안해주느거지?....ㅎ...
+                    return response()->json(['success'=>"300"]);
+
+                }else if($my_status=="listening"){
+
+                    ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->update([
+                        'story_status'=>'typing',
+                    ]);
+
+
+                }
+
+
+
+            }else{
+
+
+                // 1) my_status만 가져와서 수정
+                if($my_status=="typing"){
+                    // finish로 교체 후 story update
+                    ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->update([
+                        'story_status'=>'finish',
+                        'story'=>$request->story,
+                    ]);
+
+                    $next_user = ReadyRoom::where('game_id',$request->game_id)->whereNull('story_status')->get()->first();
+
+                    ReadyRoom::where('game_id',$request->game_id)->where('user',$next_user->user)->update([
+                        'story_status'=>'listening',
+                    ]);
+
+                    return response()->json(['success'=>"200"]);
+
+                }else if($my_status=="listening"){
+
+                    ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->update([
+                        'story_status'=>'typing',
+                    ]);
+
+
+                }else if($lastuser=="finish"){
+                    // 방의 마지막 사람이 finish일 경우
+                    // 게임 끝
+
+                }
+
+
+
+            }
+
+
+        } else {
+
+            info("설마 니가 또 내 발목을 잡진 않겠지");
+            return response()->json(['success'=>"200"]);
+
         }
+
+
+
+
+
 
 
         }

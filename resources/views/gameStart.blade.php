@@ -56,82 +56,6 @@
 
 
 
-
-    function test(){
-
-        var story = "와리바리 test";
-
-        $.ajax({
-            url: "/storyUpdate",
-            type: "post",
-            data: {
-                user: user,
-                room_id: room_id,
-                status: status,
-                story : story,
-                game_id: game_id,
-            } ,
-            success: function (response) {
-                $.ajax({
-                    url: "/storyStart",
-                    type: "post",
-                    data: {
-                        user: user,
-                        room_id: room_id,
-                        game_id: game_id,
-                    } ,
-                    success: function (response) {
-                        //화면 바꾸기
-
-                        var original_status = status;
-                        console.log(response.user_status);
-                        status = response.user_status;
-                        $('#basicBoard').text(response.user_status);
-
-                        if(response.success=="200"){
-                            // 성공했을 시 화면 변경
-                            //화면 바꾸기
-                            var user_status = response.user_status;
-                            var rumor = response.rumor;
-                            var active_user = response.activ_user;
-
-                            if(user_status=="listening"){
-
-                                $('#basicBoard').html('<div style="width: 200px; height: 300px;">\n' + rumor + '</div>');
-
-
-                            }else if(user_status=="listening_waiting"){
-                                // 다른 사람이 듣고 있는 상태
-                                $('#basicBoard').html('<div style="width: 200px; height: 300px;">\n' + rumor + '</div>');
-
-                            }else if(user_status=="typing"){
-                                // 본인이 치고 있는 상태
-
-                            }else if(user_status=="typing_waiting"){
-                                // 다른 사람이 듣고 있는 상태
-                            }
-                        }
-                           /* if(original_status==status){
-                                time_out = date_now-1;
-                            } else {
-                                time_out = date_now+30;
-                            }*/
-                        //
-                    },
-                    error: function() {
-                        console.log("에러");
-                    }
-                });
-
-            },
-            error: function() {
-                console.log("에러");
-            }
-        });
-
-    }
-
-
     var date_now = Date.now();
     var time_out = date_now+5000;//new Date(+ 30초);
 
@@ -195,6 +119,13 @@
                             }else if(user_status=="typing_waiting"){
                                 // 다른 사람이 듣고 있는 상태
                             }
+                        } else if(response.success=="300") {
+
+                            location.href="/";
+                        } else if(response.success=="900"){
+                            console.log(response.success);
+                            location.href="/storyFinish/"+game_id;
+
                         }
 
                         // web의 status와 db의 status 일치 여부에 따라
