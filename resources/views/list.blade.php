@@ -7,50 +7,37 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     {{--부트스트랩--}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 
+<div class="container-fluid p-3 my-3 bg-info text-white text-center" style="margin-bottom:0">
+    <h1><i class="far fa-keyboard"></i> 게임을 시작합니다 <i class="far fa-keyboard"></i></h1>
+    <p>[방만들기] 또는 [입장하기] 버튼을 통해 게임을 시작해보세요</p>
+</div>
 
-{{--<table class="table table-dark table-hover">
-    <thead>
-    <tr>
-        <td>idx</td>
-        <td>방이름</td>
-        <td>방장</td>
-        <td>방 입장하기</td>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<div style="display : inline-block;">
+    <input class="form-control col-xs-4" type="text" name="room_name" id="room_name" placeholder="방 이름을 입력해주세요">
+    <button class="btn btn-info" style="float: right;" onclick="room_make()">방만들기</button>
+</div>
+</nav>
 
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($room_rows as $room_row)
-        <tr>
-            <td>{{$room_row->id}}</td>
-            <td>{{$room_row->room_name}}</td>
-            <td>{{$room_row->master_nickname}}</td>
-            @if($room_row->room_status==0)
-            <td><button onclick="participateRoom({{$room_row->id}})">방 들어가기</button></td>
-            @elseif($room_row->room_status==1)
-                <td><button disabled="disabled">게임 중</button></td>
-            @endif
-        </tr>
-    @endforeach
-    </tbody>
-</table>--}}
+<div class="container" style="margin-top:30px">
 
-
+</div>
 
 <div >
-    <table class="table table-dark table-hover">
+    <table class="table table-dark table-hover text-center">
         <thead>
         <tr>
-            <td>idx test</td>
+            <td>방번호</td>
             <td>방이름</td>
             <td>방장</td>
             <td>방 입장하기</td>
-
         </tr>
         </thead>
         <tbody id="roomListTest">
@@ -58,11 +45,10 @@
     </table>
 </div>
 
-<div class="container-md p-3 my-3 bg-dark text-white">
-    <h1>방 직접 만들기</h1>
-    <input type="text" name="room_name" id="room_name" placeholder="방이름을 입력해주세요"/><br>
-    <button onclick="room_make()">방만들기</button>
+<div class="jumbotron text-center" style="margin-bottom:0">
+    <p>Footer</p>
 </div>
+
 
 <script>
 
@@ -88,8 +74,8 @@
                                 '            <td>' + value.room_name+'</td>\n' +
                                 '            <td>' + value.master_nickname+'</td>\n' +
                                 (value.room_status == 0 ?
-                                '            <td><button onclick="participateRoom(' + value.id + ')">방 들어가기</button></td>\n' :
-                                    '<td><button disabled="disabled">게임 중</button></td>\n' )+
+                                '            <td><button class="btn btn-warning" onclick="participateRoom(' + value.id + ')">방 입장</button></td>\n' :
+                                    '<td><button class="btn btn-secondary" disabled="disabled">게임 중</button></td>\n' )+
                                     '        </tr>');
 
                         }

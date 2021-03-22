@@ -29,10 +29,59 @@
         </tr>
     @endforeach
     </tbody>
-</table>
+</table>ㅃ
 
+<div>
+    <button class="btn btn-success btn-sm" onclick="room_stay()">머무르기</button>
+    <button class="btn btn-success btn-sm" onclick="room_out()">방나가기</button>
+</div>
 
 <script>
+
+    const user = localStorage.getItem('user_id');
+
+    const room_id = 39;
+
+
+    // 기존 방에 머무르기 선택
+    function room_stay(){
+
+            $.ajax({
+                url: "/roomStay",
+                type: "get",
+                data: {
+                    user_id: user,
+                    room_id: room_id
+                },
+                success: function (response) {
+                    console.log("찍히낭ㅅ");
+
+
+                    if(response.success=="200"){
+                        console.log("들어오나");
+                        // 성공 후 방으로 재진입
+                        location.href="/room/"+room_id;
+
+                    } else if(response.success=="300"){
+                        // 방에 머무르는 인원이 0 이므로 일단 방목록으로 이동
+
+                    }
+
+                },
+                error: function() {
+                    console.log("에러");
+                }
+            });
+
+
+    }
+
+    // 방에서 나가기
+    function room_out(){
+        location.href="/gameRoomList";
+
+    }
+
 
 
 </script>

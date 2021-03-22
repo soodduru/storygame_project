@@ -33,6 +33,7 @@ Route::get('/makeRoom', "GameController@createRoom");
 
 Route::post('/roomReadyCheck', "GameController@selectRoom");
 
+// 방에 입장
 Route::get('/room/{id}', "GameController@joinRoom");
 
 // 방들어가기 진입 시 1)인원수 확인 2) user_id를 ready_room table에 넣어주기
@@ -54,3 +55,9 @@ Route::get('/test', function () {
 
 Route::get('/storyFinish/{game_id}',"StoryController@storyFinish");
 
+Route::get('/css', function () {
+    return view('testgameCSS');
+});
+
+// 방에 머무르기 선택
+Route::get('/roomStay',"GameController@roomStay");

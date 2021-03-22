@@ -77,7 +77,7 @@
        // console.log("now : " + date_now + "time out : " + time_out);
 
         var story = $('#comment').val();
-        console.log("interval"story);
+        /**/
         if(date_now > time_out){
 
             var story = $('#comment').val();
@@ -135,19 +135,12 @@
                                     '                                <textarea class="form-control" rows="5" id="comment"></textarea>\n' +
                                     '                                    </div>');
 
-                                //var textarea = document.getElementById('#comment');
-
-                                //console.log(textarea.value);
-
                             }else if(user_status=="typing_waiting"){
                                 // 다른 사람이 듣고 있는 상태
                                 $('#basicBoard').html('<div id="rumorField" style="width: 200px; height: 300px;">\n' + rumor + '</div>');
 
                             }
-                        } else if(response.success=="300") {
-
-                            location.href="/";
-                        } else if(response.success=="900"){
+                        }  else if(response.success=="900"){
                             console.log(response.success);
                             location.href="/storyFinish/"+game_id;
 

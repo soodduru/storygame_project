@@ -8,11 +8,18 @@
 
     {{--부트스트랩--}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+<div class="container-fluid p-3 my-3 bg-danger text-white text-center" style="margin-bottom:0">
+    <h1><i class="far fa-meh-rolling-eyes"></i> 게임을 시작합니다 <i class="far fa-meh-rolling-eyes"></i></h1>
+    <p>이야기를 정확하게 전달할 준비를 해주세요. <br>
+        당신이 얼마나 소문을 정확하게 전달하느냐에 따라 앞으로의 이야기가 달라집니다.</p>
+</div>
 
 <div class="container-md p-3 my-3 bg-dark text-white" id="memberList2">
     <h1>{{$room_data -> id}} 방</h1>
