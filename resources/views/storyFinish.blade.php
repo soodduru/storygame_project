@@ -102,7 +102,6 @@
     // 방에서 나가기
     function room_out(){
         location.href="/gameRoomList";
-
     }
 
 

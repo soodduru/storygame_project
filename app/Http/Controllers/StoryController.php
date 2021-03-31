@@ -54,7 +54,9 @@ class StoryController extends Controller
                                 // 루머 화면에 출력
                                 // story가 null이 아닌 제일 마지막 애
                                 if($all_participant_status_rows[0]->user==$request->user){
-                                    $rumor = "조수연 천재"; // template 에서 이야기 제공
+                                    $rumor = "진경이가 하루랑 해리라고 강아지 키우거든? 근데 강현이가 강아지를 하루만 데리고 오자고 언주한테 말했대. 강현이가 개 좋아하거든. 그래서 강아지를 그렇게 싫어하는 언주가 허락해줘서 성공했데 잘됐지?
+                                                아 근데 진경이는 이번주 휴가라서 강아지 어떡하지??? 진수한테 해리 맡길거라고 하던데 떡볶이 1인분 사달라그러더라
+                                                떡볶이 맛있겠다 지금 먹으러가자"; // template 에서 이야기 제공
                                 }else{
                                     $last_story_row = ReadyRoom::where('game_id',$request->game_id)->whereNotNull('story')->get()->last();
                                     $rumor = $last_story_row->story;
@@ -71,8 +73,7 @@ class StoryController extends Controller
 
                     }else{
                         if($all_participant_status_rows[0]->user==$request->user){
-                            // 일빠따가 본인일때
-                            $rumor = "조수연 바보"; // #rumor_template에서 rumor 불러 올 수 있는 코드 추가필요
+
 
                             // 1타자의 strory_satus를 listening으로 update
                             ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->update([

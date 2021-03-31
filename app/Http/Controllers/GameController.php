@@ -60,7 +60,7 @@ class GameController extends Controller
                 // 들어왔다가 나간 경우
                 return response()->json(['success'=>"200"]);
             } else {
-                
+
                 // ready_room 테이블에 insert
                 ReadyRoom::create([
                     'room_id'=> $request->room_id,

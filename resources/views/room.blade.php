@@ -30,7 +30,7 @@
                 </div>
                 <div class="sm:block sm:ml-6">
                     <div class="flex space-x-4">
-                       <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">방 나가기</a>
+                       <a href="/gameRoomList" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">방 나가기</a>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,6 @@
                             </div>
                         </div>
                     </div>
-
 
 
                 </div>

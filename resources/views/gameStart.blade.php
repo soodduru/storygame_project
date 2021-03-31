@@ -138,9 +138,9 @@
 
                                     if(user_status=="listening"){
 
-                                        $('#basicField').html('<div class="text-center space-y-2">\n' +
+                                        $('#basicField').html('<div class=" text-center space-y-2">\n' +
                                             '            <div>\n' +
-                                            '                <div class="mt-1 border h-60 border-gray-300 rounded-md">\n' +
+                                            '                <div class="overflow-y-auto mt-1 border h-60 border-gray-300 rounded-md">\n' +
                                             '                    <p class="mt-2 text-lg text-center font-mono text-gray-500  w-full ">\n' +
                                             rumor +
                                             '                    </p>\n' +

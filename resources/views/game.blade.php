@@ -18,7 +18,7 @@
         <div class="text-center space-y-2">
             <div class="space-y-3">
                 <p class="text-lg text-black font-mono font-semibold">
-                    Welcome to story game
+                    Welcome to 경이로운 소문 게임
                 </p>
                 <p class="text-gray-500 font-medium">
 
