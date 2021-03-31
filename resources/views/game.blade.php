@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="bg-gray-200 leading-tight">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
-    {{--부트스트랩--}}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {{--tailwind--}}
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -14,17 +13,25 @@
 </head>
 <body>
 
+<div class="min-h-screen flex items-center justify-center bg-gray-250 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6 ">
+        <div class="text-center space-y-2">
+            <div class="space-y-3">
+                <p class="text-lg text-black font-mono font-semibold">
+                    Welcome to story game
+                </p>
+                <p class="text-gray-500 font-medium">
 
-
-<div class="container-md p-3 my-3 bg-dark text-white">
-    <h1>Story Game</h1>
-    <p>아무말이나 즐겨보세요~</p>
-    {{--<label for="nickname">닉네임</label>--}}
-    <input type="text" name="nickname"  class="form-control" id="nickname" placeholder="닉네임을 입력해주세요"/><br>
-    <button class="btn btn-success btn-sm" onclick="game_guide()">게임방법보기</button>
-    <button class="btn btn-success btn-sm" onclick="game_start()">게임시작</button>
+                </p>
+            </div>
+            <div class="space-y-1">
+                <input type="text" name="nickname"  class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-indigo-600 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm font-mono" placeholder="Nickname" id="nickname"/><br>
+                <button class="py-2 px-4 font-semibold font-mono rounded-lg shadow-md text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none" onclick="game_guide()">How to play</button>
+                <button class="py-2 px-4 font-semibold font-mono rounded-lg shadow-md text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none" onclick="game_start()">Let's start!</button>
+            </div>
+        </div>
+    </div>
 </div>
-
 
 
 <script>

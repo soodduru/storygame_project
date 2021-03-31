@@ -1,0 +1,40 @@
+
+/*.game-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1280px;
+    margin: 0 auto;
+    height: 100vh;
+}
+*/
+.nickname-wrap {
+  display: flex;
+  width: 640px;
+  margin: 0 auto;
+  color: aliceblue;
+}
+
+.nickname-A {
+  width: 305px;
+  margin-right: 30px;
+}
+
+.nickname-B {
+  width: 305px;
+}
+
+.nickname {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  height: 60px;
+  padding-left: 10px;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  background-color: brown;
+}
+
+.nickname:last-child {
+  margin-bottom: 0;
+}

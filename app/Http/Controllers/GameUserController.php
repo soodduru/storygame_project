@@ -30,9 +30,7 @@ class GameUserController extends Controller
             return response()->json(['success'=>"200"]);
         }
 
-
-
-
+        
     }
 
 }
