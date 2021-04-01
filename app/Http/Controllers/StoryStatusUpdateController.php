@@ -32,14 +32,12 @@ class StoryStatusUpdateController extends Controller
         // 웹에서의 status
         $web_status = $request->status;
 
-
         // 웹과 DB의 status가 동일해야 함
         if($my_status==$web_status){
 
             if($request->user == $lastuser->user){
                 // 내가 마지막 유저이면
                 // 마지막 유저일 경우 $next_user가 없음 ($next_user: story_status가 null인 첫번째 row)
-
                 // my_status 수정
                 if($my_status=="typing"){
                     // typing -> finish, story update
@@ -47,7 +45,6 @@ class StoryStatusUpdateController extends Controller
                         'story_status'=>'finish',
                         'story'=>$request->story,
                     ]);
-
 
                     return response()->json(['success'=>"200"]);
 
@@ -56,6 +53,8 @@ class StoryStatusUpdateController extends Controller
                     ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->update([
                         'story_status'=>'typing',
                     ]);
+
+                    return response()->json(['success'=>"200"]);
                 }
 
             }else{
@@ -63,13 +62,11 @@ class StoryStatusUpdateController extends Controller
                 // my_status 수정
                 if($my_status=="typing"){
 
-
                     // typing -> finish, story update
                     ReadyRoom::where('game_id',$request->game_id)->where('user',$request->user)->update([
                         'story_status'=>'finish',
                         'story'=>$request->story,
                     ]);
-
 
                     // 본인의 다음 유저의 상태를 listening으로 update 해줘야 함
                     $next_user = ReadyRoom::where('game_id',$request->game_id)->whereNull('story_status')->get()->first();
@@ -78,6 +75,7 @@ class StoryStatusUpdateController extends Controller
                         'story_status'=>'listening',
                     ]);
 
+                    return response()->json(['success'=>"200"]);
 
                 }else if($my_status=="listening"){
                     // listening -> typing
@@ -85,6 +83,7 @@ class StoryStatusUpdateController extends Controller
                         'story_status'=>'typing',
                     ]);
 
+                    return response()->json(['success'=>"200"]);
 
                 }
 

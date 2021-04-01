@@ -90,9 +90,7 @@ class GameController extends Controller
         // room_id에 해당하는 인원조회
         // 게임 시작 전이므로 game_id는 없는 것들만 조회해야함
         $selected_list_row = ReadyRoom::where('room_id',$request->room_id)->whereNull('game_id')->get();
-
         $room_id= $request->room_id;
-
 
         // user의 nickname 등 user 정보 조회를 위해 user 테이블과 join
         $users = DB::table('game_user')
@@ -100,7 +98,6 @@ class GameController extends Controller
             ->where('ready_room.room_id','=',$room_id)
             ->where('ready_room.game_id','=',null)
             ->get();
-
 
         $game_status= Room::where('id',$request->room_id)->get()->first();
 
@@ -112,13 +109,10 @@ class GameController extends Controller
             return response()->json(['data'=>$selected_list_row, 'success'=>"200",'gameStatus'=>0,'users'=>$users]);
         }
 
-
     }
 
     // [게임시작] 버튼 클릭
     public function gameStart(Request $request){
-
-
         // 인원조회
         $user_count = ReadyRoom::where('room_id',$request->room_id)->whereNull('game_id')->count();
 
@@ -128,13 +122,11 @@ class GameController extends Controller
             ->where('ready_room.room_id','=', $request->room_id)
             ->get();
 
-
         if($user_count<=1){
             // 인원이 1명이나 1명이하 일 때 게임 시작 X
             return response()->json(['success'=>"300"]);
 
         } else {
-
             // game_id 생성하여 room 테이블과 ready_room 테이블에 update
             $game_id = Str::random(40);
 
@@ -157,12 +149,9 @@ class GameController extends Controller
                     'game_id' => $game_id,
                 ]);
             }
-
             // 생성한 random game_id를 다시 보내주기
             return response()->json(['success'=>"200",'game_id'=>$game_id]);
         }
-
-
 
     }
 
@@ -176,11 +165,6 @@ class GameController extends Controller
         return view('gameStart',["game_id"=>$game_id, "room_id"=>$room_info->room_id]);
 
     }
-
-
-
-
-
 
 
 

@@ -56,7 +56,6 @@
             game_id: game_id,
         },
         success: function (response) {
-
             console.log(response.success);
             $('#basicField').html('<div class="text-center space-y-2">\n' +
                 '            <div>\n' +
@@ -72,9 +71,7 @@
                 '           \n' +
                 '        </p>'
             );
-
             status = response.user_status;
-            // 잠시 후 게임이 시작됩니다.
         },
         error: function() {
             console.log("에러");
@@ -84,17 +81,14 @@
 
 
     var date_now = Date.now();
-    var time_out = date_now+5000;//new Date(+ 30초);
+    var time_out = date_now+30000;
 
     var interval = setInterval(function(){
-        //1초마다 흘러감
-
+        // 1초마다 흘러감
         var date_now = Date.now();
-
         var story = $('#comment').val();
 
         if(date_now > time_out){
-
             var story = $('#comment').val();
             console.log(story);
             $.ajax({
@@ -119,25 +113,19 @@
                         success: function (response) {
                             //화면 바꾸기
                             var original_status = status;
-                            console.log(response.user_status);
                             status = response.user_status;
-
-
                             // web의 status와 db의 status 일치 여부에 따라
                             if(original_status==status){
                                 time_out = date_now-1;
                             } else {
-                                time_out = date_now+5000;
-
+                                time_out = date_now+30000;
                                 if(response.success=="200"){
                                     // 성공했을 시 화면 변경
                                     // 화면 바꾸기
                                     var user_status = response.user_status;
                                     var rumor = response.rumor;
                                     var active_user = response.activ_user;
-
                                     if(user_status=="listening"){
-
                                         $('#basicField').html('<div class=" text-center space-y-2">\n' +
                                             '            <div>\n' +
                                             '                <div class="overflow-y-auto mt-1 border h-60 border-gray-300 rounded-md">\n' +

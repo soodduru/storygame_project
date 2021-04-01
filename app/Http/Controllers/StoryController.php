@@ -29,13 +29,10 @@ class StoryController extends Controller
 
         //
         if(isset($story_null)){
-
             foreach ($all_participant_status_rows as $all_participant_status_row){
                 if($all_participant_status_row->user==$story_null->user){
                     if(isset($story_exists)){
-
                         if($story_exists->story_status=="typing"){
-
                             if($all_participant_status_row->user==$request->user){
                                 // 타이핑 하는 타자가 본인 일 때
                                 // 타이핑 할 수 있는 화면을 출력 할 수 있도록
@@ -95,6 +92,7 @@ class StoryController extends Controller
 
         } else {
 
+            info("900부분");
             $stories = ReadyRoom::where('game_id',$request->game_id)->get();
 
             foreach ($stories as $story) {
