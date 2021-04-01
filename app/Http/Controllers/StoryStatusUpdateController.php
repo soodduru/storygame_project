@@ -40,7 +40,6 @@ class StoryStatusUpdateController extends Controller
                 // 내가 마지막 유저이면
                 // 마지막 유저일 경우 $next_user가 없음 ($next_user: story_status가 null인 첫번째 row)
 
-
                 // my_status 수정
                 if($my_status=="typing"){
                     // typing -> finish, story update

@@ -24,7 +24,7 @@
             <div class="flex-1 flex items-center  sm:items-stretch sm:justify-start">
                 <div class="flex-shrink-0 flex items-center">
                     <p class="text-lg text-white font-mono font-semibold">
-                        {{$room_data -> id}} 방 <br>
+                        {{$room_data -> id}}번 방 <br>
                         {{$room_data -> master_nickname}}
                     </p>
                 </div>

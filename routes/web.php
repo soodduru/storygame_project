@@ -57,6 +57,8 @@ Route::post('/storyUpdate',"StoryStatusUpdateController@statusUpdate");
 // 게임이 끝났을때 최종 스토리 전달을 확인 할 수 있는 페이지로 이동
 Route::get('/storyFinish/{game_id}',"StoryController@storyFinish");
 
-
+Route::get('/test', function () {
+    return view('test');
+});
 
 

@@ -96,7 +96,7 @@
 <script>
 
     const user = localStorage.getItem('user_id');
-    const room_id = {{$room_id}};
+
 
 
     // 방에서 나가기
